@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Incident</title>
+    <link rel="stylesheet" th:href="@{../../css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+    <script src="https://use.fontawesome.com/b93d0f8693.js"></script>
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{/myIncidents}">Back to incidents list</a></li>
+    </ul>
+    <div>
+        <h2 style="display: inline-block"><i th:class="${incident.id} == null ? 'fa fa-plus' : 'fa fa-pencil-square-o'" aria-hidden="true"></i></h2>
+        <h2 style="display: inline-block" th:text="${incident.id} == null ? 'Create incident' : 'Editing incident number' + ${incident.incidentNumber}"></h2>
+    </div>
+    <ul th:each="error : ${errors}" style="color: #ff0000">
+        <li th:text="${error}"></li>
+    </ul>
+    <br/>
+    <form method="POST" th:action="@{${incident.id} == null ? '/incident/' : '/incident/' + ${incident.id}}" th:object="${incident}">
+
+        <input type="hidden" th:field="*{id}" />
+         <div class="form-group">
+            <label for="incidentNumber"><b>Incident number: </b></label>
+            <input class="form-control" type="text" th:field="*{incidentNumber}" id="incidentNumber"/>
+        </div>
+        <div class="form-group">
+            <label for="incidentDate"><b>Incident date: </b></label>
+            <input class="form-control"type="date"  th:field="*{incidentDate}" id="incidentDate"/>
+        </div>
+        <div class="form-group">
+            <label for="description"><b>Description: </b></label>
+            <textarea  class="form-control" th:field="*{description}" id="description">Enter description here...</textarea>
+        </div>
+        <div class="form-group">
+            <label for="courses"><h2></i>Available exhibits:</h2></label>
+            <select th:field="*{selectedExhibitId}" id="exhibits" class="custom-select">
+                <option th:each="exhibit : ${availableExhibits}"
+                        th:value="${exhibit.id}"
+                        th:text="${exhibit.title}">
+                </option>
+            </select>
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary"/>
+    </form>
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

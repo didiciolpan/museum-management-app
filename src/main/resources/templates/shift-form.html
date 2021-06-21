@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Shift</title>
+    <link rel="stylesheet" th:href="@{../../css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+    <script src="https://use.fontawesome.com/b93d0f8693.js"></script>
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{/shifts}">Back to shifts list</a></li>
+    </ul>
+    <div>
+        <h2 style="display: inline-block"><i th:class="${shift.id} == null ? 'fa fa-plus' : 'fa fa-pencil-square-o'" aria-hidden="true"></i></h2>
+        <h2 style="display: inline-block" th:text="${shift.id} == null ? 'Create shift' : 'Editing shift from' + ${shift.shiftDate}"></h2>
+    </div>
+    <ul th:each="error : ${errors}" style="color: #ff0000">
+        <li th:text="${error}"></li>
+    </ul>
+    <br/>
+    <form method="POST" th:action="@{${shift.id} == null ? '/shift/' : '/shift/' + ${shift.id}}" th:object="${shift}">
+
+        <input type="hidden" th:field="*{id}" />
+        <div class="form-group">
+            <label for="shiftDate"><b>Shift date: </b></label>
+            <input class="form-control"type="date"  th:field="*{shiftDate}" id="shiftDate"/>
+        </div>
+        <div class="form-group">
+            <label for="workingHours"><b>Working hours: </b></label>
+            <input class="form-control" type="number" th:field="*{workingHours}" id="workingHours"/>
+        </div>
+        <div class="form-group">
+            <label for="courses"><h2></i>Available guardians:</h2></label>
+            <select th:field="*{selectedUserId}" id="roles" class="custom-select">
+                <option th:each="user : ${availableUsers}"
+                        th:value="${user.id}"
+                        th:text="${user.name}">
+                </option>
+            </select>
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary"/>
+    </form>
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

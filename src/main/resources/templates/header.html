@@ -1,0 +1,40 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head></head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-reverse" th:fragment="header">
+        <a class="navbar-brand" th:href="@{/}">
+        	<img src="../static/img/museum.png" th:src="@{../../img/museum.png}" alt="Logo.." width="50">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse row" id="navbarNav">
+        	<div class="col-6">
+	        	<ul class="navbar-nav">
+	                <li class="nav-item"><a th:href="@{/}" class="nav-link">Homepage</a></li>
+	                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/users}" class="nav-link">Users</a>
+	                <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/roles}" class="nav-link">User roles</a>
+	                <a sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE', 'ROLE_GUARDIAN')" th:href="@{/exhibits}" class="nav-link">Exhibits</a>
+	                <a sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/shifts}" class="nav-link">Guarding shifts</a>
+	                <a sec:authorize="hasAnyRole('ROLE_ADMIN')" th:href="@{/incidents}" class="nav-link">Incidents</a>
+	                <a sec:authorize="hasAnyRole('ROLE_GUARDIAN')" th:href="@{/myShifts}" class="nav-link">My shifts</a>
+	                <a sec:authorize="hasAnyRole('ROLE_GUARDIAN')" th:href="@{/myIncidents}" class="nav-link">My incidents</a>
+	            </ul>
+        	</div>
+        	<div class="col-5"></div>
+        	<div class="col-1">
+        		<ul class="navbar-nav">
+	                <li class="nav-item">
+	                    <a sec:authorize="isAnonymous()" th:href="@{/login}" class="nav-link">Log in</a>
+	                    <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link">Log out</a>
+	                </li>
+	            </ul>
+        	</div>
+
+        </div>
+    </nav>
+    <footer class="page-footer font-small cyan darken-3">
+    Test
+    </footer>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Incidents</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h1>List of all incidents: </h1>
+
+    <table class="table">
+        <tr>
+            <th>Incident number</th>
+            <th>Incident date</th>
+            <th>Incident description</th>
+            <th>Exhibit name</th>
+            <th>Reported by</th>
+            <th></th>
+        </tr>
+        <tr th:each="incident : ${incidents}">
+            <td th:text="${incident.incidentNumber}"></td>
+            <td th:text="${incident.incidentDate}"></td>
+            <td th:text="${incident.description}"></td>
+            <td th:text="${incident.exhibit.title}"></td>
+            <td th:text="${incident.user.name}"></td>
+        </tr>
+    </table>
+
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

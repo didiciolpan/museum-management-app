@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>roles</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h1>Available user roles: </h1>
+
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{/role/create}">Create new role</a></li>
+    </ul>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr th:each="role : ${roles}">
+            <td th:text="${role.name}"></td>
+            <td th:text="${role.description}"></td>
+            <td></td>
+            
+            <td class="actions">
+                <a th:href="@{'/role/' + ${role.id}}" class="btn btn-primary">View</a>
+                <span>
+                    <a th:href="@{'/role/' + ${role.id} + '/edit'}" class="btn btn-secondary">Edit</a>
+                    <a th:href="@{'/role/' + ${role.id} + '/delete'}"
+                       onclick="return confirm('Are you sure?')"
+                       class="btn btn-danger">
+                                Delete
+                    </a>
+                </span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

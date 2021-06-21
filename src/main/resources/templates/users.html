@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h1>List of all users: </h1>
+
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{user/create}">Create new user</a></li>
+    </ul>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Phone number</th>
+            <th>Email</th>
+            <th>Role</th>
+            <th></th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.phoneNumber}"></td>
+            <td th:text="${user.email}"></td>
+            <td th:text="${user.role.name}"></td>
+            <td class="actions">
+                <a th:href="@{'/user/' + ${user.id}}" class="btn btn-primary">View</a>
+                <span>
+                    <a th:href="@{'/user/' + ${user.id} + '/edit'}" class="btn btn-secondary">Edit</a>
+                    <a th:href="@{'/user/' + ${user.id} + '/delete'}"
+                       onclick="return confirm('Are you sure you want to delete this user?')"
+                       class="btn btn-danger">Delete</a>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Incidents</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h1>List of all my incidents: </h1>
+
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{incident/create}">Create new incident</a></li>
+    </ul>
+    <table class="table">
+        <tr>
+            <th>Incident number</th>
+            <th>Incident date</th>
+            <th>Incident description</th>
+            <th>Exhibit name</th>
+            <th></th>
+        </tr>
+        <tr th:each="incident : ${incidents}">
+            <td th:text="${incident.incidentNumber}"></td>
+            <td th:text="${incident.incidentDate}"></td>
+            <td th:text="${incident.description}"></td>
+            <td th:text="${incident.exhibit.title}"></td>
+            <td class="actions">
+                <a th:href="@{'/incident/' + ${incident.id}}" class="btn btn-primary">View</a>
+                <span>
+                    <a th:href="@{'/incident/' + ${incident.id} + '/edit'}" class="btn btn-secondary">Edit</a>
+                    <a th:href="@{'/incident/' + ${incident.id} + '/delete'}"
+                       onclick="return confirm('Are you sure you want to delete this incident?')"
+                       class="btn btn-danger">Delete</a>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

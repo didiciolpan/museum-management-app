@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Shifts</title>
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h1>List of all shifts: </h1>
+
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{shift/create}">Create new shift</a></li>
+    </ul>
+    <table class="table">
+        <tr>
+            <th>Shift date</th>
+            <th>Working hours</th>
+            <th>Guard name</th>
+            <th></th>
+        </tr>
+        <tr th:each="shift : ${shifts}">
+            <td th:text="${shift.shiftDate}"></td>
+            <td th:text="${shift.workingHours}"></td>
+            <td th:text="${shift.user.name}"></td>
+            <td class="actions">
+                <a th:href="@{'/shift/' + ${shift.id}}" class="btn btn-primary">View</a>
+                <span>
+                    <a th:href="@{'/shift/' + ${shift.id} + '/edit'}" class="btn btn-secondary">Edit</a>
+                    <a th:href="@{'/shift/' + ${shift.id} + '/delete'}"
+                       onclick="return confirm('Are you sure you want to delete this shift?')"
+                       class="btn btn-danger">Delete</a>
+                </span>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

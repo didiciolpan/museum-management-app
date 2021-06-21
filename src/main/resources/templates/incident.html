@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+    <script src="https://use.fontawesome.com/b93d0f8693.js"></script>
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h2><i class="fa fa-wrench" aria-hidden="true"></i>Incident information</h2>
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{/myIncidents}">Back to list</a></li>
+        <li sec:authorize="hasRole('ROLE_GUARDIAN')" class="nav-item"><a class="nav-link" th:href="@{'/incident/' +  ${incident.id} + '/edit'}">Edit</a></li>
+        <li sec:authorize="hasRole('ROLE_GUARDIAN')" class="nav-item"><a class="nav-link" th:href="@{'/incident/' +  ${incident.id} + '/delete'}"
+                                                onclick="return confirm('Are you sure you want to deleted incident?')">Delete</a></li>
+    </ul>
+
+    <table class="table">
+        <tr></tr>
+        <tr>
+            <td><h4>Incident number:</h4></td>
+            <td th:text=" ${incident.incidentNumber}"></td>
+        </tr>
+        <tr>
+            <td><h4>Incident date: </h4></td>
+            <td th:text=" ${incident.incidentDate}"></td>
+        </tr>
+        <tr>
+            <td><h4>Incident description: </h4></td>
+            <td th:text=" ${incident.description}"></td>
+        </tr>
+         <tr>
+            <td><h4>Exhibit name: </h4></td>
+            <td th:text=" ${incident.exhibit.title}"></td>
+        </tr>
+    </table>
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>

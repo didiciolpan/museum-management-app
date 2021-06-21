@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>role</title>
+    <link rel="stylesheet" th:href="@{../css/style.css}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/sticky-footer-navbar.css">
+    <script src="https://use.fontawesome.com/b93d0f8693.js"></script>
+</head>
+<body>
+<header th:replace="header::header"></header>
+
+<div class="container">
+    <h2><i class="fa fa-cog" aria-hidden="true"></i>Role information</h2>
+    <ul class="nav justify-content-end">
+        <li class="nav-item"><a class="nav-link" th:href="@{/roles}">Back to list</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{'/role/' + ${role.id} + '/edit'}">Edit</a></li>
+        <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item"><a class="nav-link" th:href="@{'/role/' + ${role.id} + '/delete'}"
+                                                                 onclick="return confirm('Are you sure you want to deleted this role?')">Delete</a></li>
+    </ul>
+
+    <table class="table">
+        <tr></tr>
+        <tr>
+            <td><h4>Name: </h4></td>
+            <td th:text="${role.name}"></td>
+        </tr>
+        <tr>
+            <td><h4>Description: </h4></td>
+            <td th:text="${role.description}"></td>
+        </tr>
+    </table>
+</div>
+
+<footer th:replace="footer::footer"></footer>
+</body>
+</html>
